@@ -1,0 +1,110 @@
+﻿<UserControl x:Class="AZGameToolTry1.Controls.ProjectTab"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:AZGameToolTry1.Controls"
+			 xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+			 xmlns:dragablz="clr-namespace:Dragablz;assembly=Dragablz"
+			 xmlns:mahApps="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+			 xmlns:controls="clr-namespace:AZGameToolTry1.Controls"
+			 xmlns:wpfexample="clr-namespace:MaterialDesignColors.WpfExample"
+			 xmlns:model="clr-namespace:AZGameToolTry1.Model"
+			 xmlns:viewModel="clr-namespace:AZGameToolTry1.ViewModel"
+			 DataContext="{Binding ProjectViewModel, Mode=OneWay, Source={StaticResource ServiceLocator}}"
+			 mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300"					 
+			 >
+	<d:DataContext>
+		<viewModel:DesignTimeProjectViewModel/>
+	</d:DataContext>
+
+	<DockPanel>
+		<materialDesign:Card Padding="32" Margin="4" DockPanel.Dock="Top" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" >
+			<ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Margin="0 12 0 0">
+				<ItemsControl ItemsSource="{Binding ProjectFiles}"  >
+					<ItemsControl.Resources>
+
+						<!-- ReadMe Card -->
+
+						<DataTemplate DataType="{x:Type model:ReadMe}">
+							<materialDesign:Card  >
+								<Grid Margin="4"
+			Width="200"
+			Height="256">
+									<Grid.RowDefinitions>
+										<RowDefinition Height="160" />
+										<RowDefinition Height="*" />
+									</Grid.RowDefinitions>
+									<materialDesign:ColorZone VerticalAlignment="Stretch" Mode="PrimaryLight">
+										<materialDesign:PackIcon
+					Width="128"
+					Height="128"
+					HorizontalAlignment="Center"
+					VerticalAlignment="Center"
+					Kind="FileDocument" />
+									</materialDesign:ColorZone>
+									<StackPanel
+				Grid.Row="1"
+				HorizontalAlignment="Center"
+				VerticalAlignment="Center">
+										<TextBlock >README.md</TextBlock>
+										<Button
+					Margin="0,4,0,0"
+					Command="{Binding DataContext.ViewReadmeCommand, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}"
+											CommandParameter="{Binding}"
+					Style="{StaticResource MaterialDesignFlatButton}">
+											VIEW
+										</Button>
+									</StackPanel>
+								</Grid>
+							</materialDesign:Card>
+						</DataTemplate>
+
+					
+						<!-- Team Card -->
+						<DataTemplate DataType="{x:Type model:Team}">
+							<materialDesign:Card  >
+								<Grid Margin="4"
+			Width="200"
+			Height="256">
+									<Grid.RowDefinitions>
+										<RowDefinition Height="160" />
+										<RowDefinition Height="*" />
+									</Grid.RowDefinitions>
+									<materialDesign:ColorZone VerticalAlignment="Stretch" Mode="PrimaryLight">
+										<materialDesign:PackIcon
+					Width="128"
+					Height="128"
+					HorizontalAlignment="Center"
+					VerticalAlignment="Center"
+					Kind="FolderAccount" />
+									</materialDesign:ColorZone>
+									<StackPanel
+				Grid.Row="1"
+				HorizontalAlignment="Center"
+				VerticalAlignment="Center">
+										<TextBlock >TEAMS.md</TextBlock>
+										<Button
+					Margin="0,4,0,0"
+					Command="{Binding DataContext.ViewTeamCommand, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}"
+											CommandParameter="{Binding}"
+					Style="{StaticResource MaterialDesignFlatButton}">
+											VIEW
+										</Button>
+									</StackPanel>
+								</Grid>
+							</materialDesign:Card>
+						</DataTemplate>
+					</ItemsControl.Resources>
+					<ItemsControl.ItemsPanel>
+						<ItemsPanelTemplate>
+							<WrapPanel  />
+						</ItemsPanelTemplate>
+					</ItemsControl.ItemsPanel>
+				</ItemsControl>
+			</ScrollViewer>
+		</materialDesign:Card>
+	</DockPanel>
+
+</UserControl>
