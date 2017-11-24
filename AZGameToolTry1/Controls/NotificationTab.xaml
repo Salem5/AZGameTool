@@ -13,28 +13,41 @@
 			 mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300"			 
 	DataContext="{Binding NotificationViewModel, Source={StaticResource ServiceLocator}}"
-	xmlns:ownConverters="clr-namespace:AZGameToolTry1.Converter"
-	>
-	<Grid>
-		<materialDesign:Card	
+	xmlns:ownConverters="clr-namespace:AZGameToolTry1.Converter">
+    <ScrollViewer>
+        <Grid>
+            <materialDesign:Card	
 	Margin="10,10"
 	Background="{DynamicResource MaterialDesignBackground}">
-			<ItemsControl ItemTemplate="{DynamicResource ExpandableNotificationDataTemplate}"  ItemsSource="{Binding NotificationCollection}">
-				<ItemsControl.Resources>
-					<DataTemplate x:Key="ExpandableNotificationDataTemplate">
-						<Grid>
-							<Expander HorizontalAlignment="Stretch" Header="{Binding Model.Title}" IsExpanded="{Binding ExpandNotification}"  Background="{Binding Model.Kind, Converter={ownConverters:NotificationTypeToBrushConverter}, ConverterParameter=PrimaryHueDarkBrush;PrimaryHueMidBrush;PrimaryHueLightBrush, Mode=OneWay}" Foreground="{Binding Model.Kind, Converter={ownConverters:NotificationTypeToBrushConverter}, ConverterParameter=PrimaryHueDarkForegroundBrush;PrimaryHueMidForegroundBrush;PrimaryHueLightForegroundBrush, Mode=OneWay}"  >
-								<TextBlock Foreground="{Binding Model.Kind, Converter={ownConverters:NotificationTypeToBrushConverter}, ConverterParameter=PrimaryHueDarkForegroundBrush;PrimaryHueMidForegroundBrush;PrimaryHueLightForegroundBrush, Mode=OneWay}" 
+                <ItemsControl ItemTemplate="{DynamicResource ExpandableNotificationDataTemplate}"  ItemsSource="{Binding NotificationCollection}">
+                    <ItemsControl.Resources>
+                        <DataTemplate x:Key="ExpandableNotificationDataTemplate">
+                            <Grid>
+                                <Expander HorizontalAlignment="Stretch" IsExpanded="{Binding ExpandNotification}"  Background="{Binding Model.Kind, Converter={ownConverters:NotificationTypeToBrushConverter}, ConverterParameter=PrimaryHueDarkBrush;PrimaryHueMidBrush;PrimaryHueLightBrush, Mode=OneWay}"
+                                          Foreground="{Binding Model.Kind, Converter={ownConverters:NotificationTypeToBrushConverter}, ConverterParameter=PrimaryHueDarkForegroundBrush;PrimaryHueMidForegroundBrush;PrimaryHueLightForegroundBrush, Mode=OneWay}"  >
+                                    <Expander.Header>
+                                        <StackPanel Orientation="Horizontal">
+                                            <materialDesign:PackIcon 
+					HorizontalAlignment="Center"
+					VerticalAlignment="Center"
+                                                Height="30" Width="30"
+                                                
+					Kind="{Binding Model.Kind, Converter={ownConverters:NotificationTypeToPackIconConverter}, Mode=OneWay}" />
+                                            <TextBlock Text="{Binding Model.Title}"/>
+                                        </StackPanel>
+                                    </Expander.Header>
+                                    <TextBlock Foreground="{Binding Model.Kind, Converter={ownConverters:NotificationTypeToBrushConverter}, ConverterParameter=PrimaryHueDarkForegroundBrush;PrimaryHueMidForegroundBrush;PrimaryHueLightForegroundBrush, Mode=OneWay}" 
 					Opacity=".68"					
 					TextWrapping="Wrap" >
 									<Run Text="{Binding Model.Time}"/><Run Text=" : "/> <Run Text="{Binding Model.Message}"/>
-								</TextBlock>								
-							</Expander>
-							<Border Height="1" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Background="{DynamicResource MaterialDesignDivider}" SnapsToDevicePixels="True" />
-						</Grid>
-					</DataTemplate>
-				</ItemsControl.Resources>
-			</ItemsControl>
-		</materialDesign:Card>
-	</Grid>
+                                    </TextBlock>
+                                </Expander>
+                                <Border Height="1" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Background="{DynamicResource MaterialDesignDivider}" SnapsToDevicePixels="True" />
+                            </Grid>
+                        </DataTemplate>
+                    </ItemsControl.Resources>
+                </ItemsControl>
+            </materialDesign:Card>
+        </Grid>
+    </ScrollViewer>
 </UserControl>
