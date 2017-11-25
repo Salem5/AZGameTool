@@ -36,7 +36,7 @@ namespace AZGameToolTry1.ViewModel
             //   projectDataService = projectDataServiceParam;
 
             statusNotificationService.MessageSent += StatusNotificationService_MessageSent;
-            tabNavigationService.TabNameSent += TabNavigationService_TabNameSent;
+            tabNavigationService.TabNavigatedTo += TabNavigationService_TabNavigatedTo;
             //projectDataService.ProjectLoaded += ProjectDataService_ProjectLoaded;
         }
 
@@ -63,7 +63,7 @@ namespace AZGameToolTry1.ViewModel
             }
         }
 
-        private void TabNavigationService_TabNameSent(string s, TabNavigationEventArgs e)
+        private void TabNavigationService_TabNavigatedTo(string s, TabNavigationEventArgs e)
         {
             var res = NotificationCollection.FirstOrDefault( (n) => n.Model.Equals(e.Parameter)  );
             if (res != null)
@@ -75,7 +75,7 @@ namespace AZGameToolTry1.ViewModel
         protected override void Dispose(bool disposing)
         {
             statusNotificationService.MessageSent -= StatusNotificationService_MessageSent;
-            tabNavigationService.TabNameSent -= TabNavigationService_TabNameSent;
+            tabNavigationService.TabNavigatedTo -= TabNavigationService_TabNavigatedTo;
             //projectDataService.ProjectLoaded -= ProjectDataService_ProjectLoaded;
             base.Dispose(disposing);
         }

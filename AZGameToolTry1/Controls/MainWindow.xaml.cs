@@ -20,6 +20,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Xml;
 using AZGameToolTry1.ViewModel;
+using AZGameToolTry1.Model;
 
 namespace AZGameToolTry1.Controls
 {
@@ -28,15 +29,18 @@ namespace AZGameToolTry1.Controls
     /// </summary>
     public partial class MainWindow : MetroWindow
     {
+        ITabNavigationService tabNavigationService;
+
         public MainWindow()
         {
             InitializeComponent();
+            tabNavigationService = NinjectServiceLocator.GetStuff<ITabNavigationService>();
         }
-
-    
 
         private void MetroWindow_Loaded(object sender, RoutedEventArgs e)
         {
+            tabNavigationService.TabCreated += TabNavigationService_TabCreated;
+
             //var pipeline = new MarkdownPipelineBuilder()
             //    .UsePragmaLines()
             //    .UseDiagrams()
@@ -64,6 +68,28 @@ namespace AZGameToolTry1.Controls
             //writer.Close();
         }
 
-     
+        private void TabNavigationService_TabCreated(string s, TabNavigationEventArgs e)
+        {
+            switch (s)
+            {
+                case "ReadMeTab":
+                    {
+                        var readmeTab = new ContentTabItem() { DataContext = e.Parameter, Header = "ReadMe" };
+                        TabHostControl.Items.Add(readmeTab);
+
+                        TabHostControl.SelectedItem = readmeTab;
+
+                        //tabNavigationService.NavigateToTab("ReadMeTab",e.Parameter);
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private void MetroWindow_Unloaded(object sender, RoutedEventArgs e)
+        {
+            tabNavigationService.TabCreated -= TabNavigationService_TabCreated;
+        }
     }
 }

@@ -82,7 +82,7 @@ namespace AZGameToolTry1.ViewModel
         {
             if (projectDataService.LoadProject(path))
             {
-                tabNavigationService.GoToTab("ProjectTabControl", null);
+                tabNavigationService.NavigateToTab("ProjectTabControl", null);
             }
             // NOTE: if loading fails when we get here, the service itself should signal what went wrong since it's not specific to the project picker viewmodel.
         }

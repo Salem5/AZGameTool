@@ -20,16 +20,18 @@ namespace AZGameToolTry1.ViewModel
 {
     public class ProjectViewModel : BaseViewModel, IProjectViewModel
     {
-        readonly IStatusNotificationService statusNotificationService;
-        readonly IProjectDataService projectDataService;
+        private readonly IStatusNotificationService statusNotificationService;
+        private readonly IProjectDataService projectDataService;
+        private readonly ITabNavigationService tabNavigationService;
 
         public ICommand ViewTeamCommand { get; }
         public ICommand ViewReadmeCommand { get; }
 
-        public ProjectViewModel(IStatusNotificationService statusNotificationServiceParam, IProjectDataService projectDataServiceParam)
+        public ProjectViewModel(IStatusNotificationService statusNotificationServiceParam, IProjectDataService projectDataServiceParam, ITabNavigationService tabNavigationServiceParam)
         {
             ProjectFiles = new ObservableCollection<BaseMd>();
 
+            tabNavigationService = tabNavigationServiceParam;
             statusNotificationService = statusNotificationServiceParam;
             projectDataService = projectDataServiceParam;
             projectDataService.ProjectLoaded += ProjectDataService_ProjectLoaded;
@@ -42,8 +44,8 @@ namespace AZGameToolTry1.ViewModel
             ViewReadmeCommand = new AnotherCommandImplementation(r =>
             {
                 if (r is ReadMe readMe)
-                {
-                    statusNotificationServiceParam.SendMessage(new Notification() { Kind = NotificationKind.Other, Message = readMe.Text, Title = "DEBUG ReadmMe", Time = DateTime.Now });
+                {                    
+                    tabNavigationService.CreateTab("ReadMeTab", r);
                 }
             });
         }
@@ -67,6 +69,8 @@ namespace AZGameToolTry1.ViewModel
             get { return projectFiles; }
             set { SetValue<ObservableCollection<BaseMd>>(value, ref projectFiles); }
         }
+
+        
 
         protected override void Dispose(bool disposing)
         {

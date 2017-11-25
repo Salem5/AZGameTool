@@ -30,7 +30,6 @@ namespace AZGameToolTry1.ViewModel
         {
             get => messageQueue;
             private set => SetValue<ISnackbarMessageQueue>(value, ref messageQueue);
-
         }
 
 
@@ -117,7 +116,7 @@ namespace AZGameToolTry1.ViewModel
 
             statusNotificationService.MessageSent += StatusNotificationService_MessageSent;
             statusNotificationService.BadgeCountCleared += StatusNotificationService_BadgeCountCleared;
-            tabNavigationService.TabNameSent += TabNavigationService_TabNameSent;
+            tabNavigationService.TabNavigatedTo += TabNavigationService_TabNavigatedTo;
             projectDataService.ProjectLoaded += ProjectDataService_ProjectLoaded;
         }
 
@@ -131,7 +130,7 @@ namespace AZGameToolTry1.ViewModel
             LoadedProject = p.Name;
         }
 
-        private void TabNavigationService_TabNameSent(string s, TabNavigationEventArgs e)
+        private void TabNavigationService_TabNavigatedTo(string s, TabNavigationEventArgs e)
         {
             switch (s)
             {
@@ -155,8 +154,8 @@ namespace AZGameToolTry1.ViewModel
                         NotificationTabControl = true;
                         statusNotificationService.ClearBadgeCount();
                     }
-                    break;
-                default:
+                    break;              
+                default:                    
                     break;
             }
         }
@@ -167,9 +166,9 @@ namespace AZGameToolTry1.ViewModel
 
             MessageQueue.Enqueue(n.Title, "Details", () =>
             {
-                tabNavigationService.GoToTab(nameof(NotificationTabControl), n);
+                tabNavigationService.NavigateToTab(nameof(NotificationTabControl), n);
             }, promote);
-            
+
             BadgeCount = BadgeCount + 1 ?? 1;
         }
 
@@ -177,7 +176,7 @@ namespace AZGameToolTry1.ViewModel
         {
             statusNotificationService.MessageSent -= StatusNotificationService_MessageSent;
             statusNotificationService.BadgeCountCleared -= StatusNotificationService_BadgeCountCleared;
-            tabNavigationService.TabNameSent -= TabNavigationService_TabNameSent;
+            tabNavigationService.TabNavigatedTo -= TabNavigationService_TabNavigatedTo;
             projectDataService.ProjectLoaded -= ProjectDataService_ProjectLoaded;
             base.Dispose(disposing);
         }

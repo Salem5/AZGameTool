@@ -3,12 +3,16 @@ using System;
 
 namespace AZGameToolTry1.LService
 {
-    public delegate void TabNameSentHandler(String s, TabNavigationEventArgs e);
+    public delegate void TabNavigationHandler(String s, TabNavigationEventArgs e);
 
     public interface ITabNavigationService
     {
-        event TabNameSentHandler TabNameSent;
+        event TabNavigationHandler TabNavigatedTo;
 
-        void GoToTab(string tabName, Object parameter);
+        event TabNavigationHandler TabCreated;
+
+        void NavigateToTab(string tabName, Object parameter);
+
+        void CreateTab(string tabName, Object parameter);
     }
 }

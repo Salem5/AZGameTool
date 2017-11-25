@@ -23,6 +23,7 @@
      FontFamily="{DynamicResource MaterialDesignFont}"        		
 					  Icon="/Content/GoboToolIcon.ico"					 
 	DataContext="{Binding MainViewModel, Source={StaticResource ServiceLocator}}"
+    Loaded="MetroWindow_Loaded" Unloaded="MetroWindow_Unloaded"
 	>
 	<mahApps:MetroWindow.RightWindowCommands>
 		<mahApps:WindowCommands HorizontalAlignment="Stretch">
@@ -39,7 +40,7 @@
 			<RowDefinition Height="*"/>
 			<RowDefinition Height="Auto"/>
 		</Grid.RowDefinitions>
-		<dragablz:TabablzControl >
+		<dragablz:TabablzControl x:Name="TabHostControl" >
 			<dragablz:TabablzControl.InterTabController>
 				<dragablz:InterTabController />
 			</dragablz:TabablzControl.InterTabController>

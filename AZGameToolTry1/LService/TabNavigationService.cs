@@ -9,12 +9,13 @@ namespace AZGameToolTry1.LService
 {
     public class TabNavigationService : ITabNavigationService
     {
-        public void GoToTab(string tabName, Object parameter)
-        {
-            TabNameSent?.Invoke(tabName, new TabNavigationEventArgs(parameter)  );
-        }
+        public void NavigateToTab(string tabName, Object parameter)
+        => TabNavigatedTo?.Invoke(tabName, new TabNavigationEventArgs(parameter));
 
-        public event TabNameSentHandler TabNameSent;
-        
+        public void CreateTab(string tabName, object parameter)
+         => TabCreated?.Invoke(tabName, new TabNavigationEventArgs(parameter));
+
+        public event TabNavigationHandler TabNavigatedTo;
+        public event TabNavigationHandler TabCreated;
     }
 }
