@@ -30,11 +30,13 @@ namespace AZGameToolTry1.Controls
     public partial class MainWindow : MetroWindow
     {
         ITabNavigationService tabNavigationService;
+      
 
         public MainWindow()
         {
             InitializeComponent();
             tabNavigationService = NinjectServiceLocator.GetStuff<ITabNavigationService>();
+         //   projectDataService = NinjectServiceLocator.GetStuff<IProjectDataService>();
         }
 
         private void MetroWindow_Loaded(object sender, RoutedEventArgs e)
@@ -74,7 +76,17 @@ namespace AZGameToolTry1.Controls
             {
                 case "ReadMeTab":
                     {
-                        var readmeTab = new ContentTabItem() { DataContext = e.Parameter, Header = "ReadMe" };
+                        var readmeTab = new ContentTabItem() { DataContext = e.Parameter, Header = ((ReadMe)e.Parameter).FileName };
+                        TabHostControl.Items.Add(readmeTab);
+
+                        TabHostControl.SelectedItem = readmeTab;
+
+                        //tabNavigationService.NavigateToTab("ReadMeTab",e.Parameter);
+                    }
+                    break;
+                case "AboutMe":
+                    {
+                        var readmeTab = new ContentTabItem() { DataContext = e.Parameter, Header = "Omar Ajerray"};
                         TabHostControl.Items.Add(readmeTab);
 
                         TabHostControl.SelectedItem = readmeTab;

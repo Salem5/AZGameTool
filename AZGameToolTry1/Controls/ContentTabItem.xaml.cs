@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AZGameToolTry1.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,11 @@ namespace AZGameToolTry1.Controls
         public ContentTabItem()
         {
             InitializeComponent();
+        }
+
+        private void WebBrowser_Loaded(object sender, RoutedEventArgs e)
+        {
+            mdWebViewer.NavigateToString(((ReadMe)DataContext).Text);
         }
     }
 }

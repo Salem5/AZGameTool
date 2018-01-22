@@ -26,6 +26,8 @@ namespace AZGameToolTry1.ViewModel
 
         ISnackbarMessageQueue messageQueue;
 
+        public ICommand OpenAboutMeCommand { get; }
+
         public ISnackbarMessageQueue MessageQueue
         {
             get => messageQueue;
@@ -114,6 +116,20 @@ namespace AZGameToolTry1.ViewModel
             tabNavigationService = tabNavigationServiceParam;
             projectDataService = projectDataServiceParam;
 
+            OpenAboutMeCommand = new AnotherCommandImplementation(t =>
+            {
+                string aboutMeFileName = "AboutMe.md";
+                string aboutMeFullPath = Path.Combine(Environment.CurrentDirectory, aboutMeFileName);
+                tabNavigationService.CreateTab("AboutMe",
+                    new ReadMe()
+                    {
+                        FileName = aboutMeFileName,
+                        FullFileName = aboutMeFullPath,
+                        Text = projectDataService.CreateMarkup(aboutMeFullPath),
+                        LastUpdate = File.GetLastWriteTime(aboutMeFullPath)
+                    });
+            });
+
             statusNotificationService.MessageSent += StatusNotificationService_MessageSent;
             statusNotificationService.BadgeCountCleared += StatusNotificationService_BadgeCountCleared;
             tabNavigationService.TabNavigatedTo += TabNavigationService_TabNavigatedTo;
@@ -154,8 +170,8 @@ namespace AZGameToolTry1.ViewModel
                         NotificationTabControl = true;
                         statusNotificationService.ClearBadgeCount();
                     }
-                    break;              
-                default:                    
+                    break;
+                default:
                     break;
             }
         }

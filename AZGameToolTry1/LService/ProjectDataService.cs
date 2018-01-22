@@ -1,6 +1,7 @@
 ﻿using AZGameToolTry1.Model;
 using LibGit2Sharp;
 using LiteDB;
+using Markdig;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -8,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Xml;
 
 namespace AZGameToolTry1.LService
 {
@@ -74,16 +76,39 @@ namespace AZGameToolTry1.LService
 
                     var resTeam = from mdFile in mdFilePaths
                                   where mdFile.ToLower().EndsWith("team.md")
-                                  select new Team() { };
+                                  select new Team()
+                                  {
+                                      LastUpdate = File.GetLastWriteTime(mdFile),
+                                      FileName = Path.GetFileName(mdFile),
+                                      FullFileName = mdFile
+                                  };
+
 
                     var resReadMe = from mdFile in mdFilePaths
-                                    where mdFile.ToLower().EndsWith("readme.md")
-                                    select new ReadMe() { Text = File.ReadAllText(Path.Combine(projectPath, mdFile)) };
+                                    where mdFile.ToLower().EndsWith(".md")
+                                    select new ReadMe()
+                                    { Text = CreateMarkup(mdFile),
+                                        LastUpdate = File.GetLastWriteTime(mdFile),
+                                        FileName = Path.GetFileName(mdFile),
+                                        FullFileName = mdFile };
 
+                    //var resOther = from mdFile in mdFilePaths
+                    //               where mdFile.ToLower().EndsWith(".md") //&& !resReadMe.Contains<BaseMd>(mdFile)
+                    //               select new BaseMd() { Text = File.ReadAllText(Path.Combine(projectPath, mdFile)) };
+
+                    
                     var castedProjectFiles = ProjectFiles as List<BaseMd>;
                     castedProjectFiles.Clear();
                     castedProjectFiles.AddRange(resTeam);
+
+                    // NOTE: reworked it to show every kind of MD file other than 'Team' as 'ReadMe' due to time constraints. - 22 Jan 18
+
+                    foreach (var item in resReadMe)
+                    {
+                        castedProjectFiles.Remove(item);
+                    }
                     castedProjectFiles.AddRange(resReadMe);
+                    //                    castedProjectFiles.AddRange(resOther);
 
                     ProjectLoaded?.Invoke(project, new EventArgs());
                     return true;
@@ -111,6 +136,36 @@ namespace AZGameToolTry1.LService
                 });
                 return false;
             }
+        }
+
+        public string CreateMarkup(string sourceFilePath) {
+            var pipeline = new MarkdownPipelineBuilder()
+                   .UsePragmaLines()
+                   .UseDiagrams()
+                   .UseAdvancedExtensions()
+                   .UseYamlFrontMatter()
+                   .Build();
+
+            var htmlStraight = Markdig.Markdown.ToHtml(File.ReadAllText(sourceFilePath), pipeline);
+
+           // var doc = Markdig.Markdown.Parse(File.ReadAllText(sourceFilePath), pipeline);
+
+            StringBuilder sb = new StringBuilder();
+            XmlWriter writer = XmlWriter.Create(sb);
+            writer.WriteStartDocument();
+            writer.WriteStartElement("html");
+            writer.WriteStartElement("head");
+            writer.WriteStartElement("style");
+            writer.WriteRaw("ul { list-style-type: none; }");
+            writer.WriteEndElement();
+            writer.WriteEndElement();
+            writer.WriteStartElement("body");
+            writer.WriteRaw(htmlStraight);
+            writer.WriteEndElement();
+            writer.WriteEndElement();
+            writer.Close();
+
+            return sb.ToString();
         }
 
         public event ProjectLoadedHandler ProjectLoaded;

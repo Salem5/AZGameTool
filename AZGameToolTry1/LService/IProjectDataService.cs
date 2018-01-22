@@ -14,5 +14,7 @@ namespace AZGameToolTry1.LService
         IEnumerable<BaseMd> ProjectFiles { get; }
 
         bool LoadProject(string projectPath);
+
+        string CreateMarkup(string sourceFilePath);
     }
 }

@@ -8,8 +8,6 @@ namespace AZGameToolTry1.Model
 {
    public class ReadMe : BaseMd
     {
-        public string Text { get; set; }
-        public string FullFileName { get; private set; }
-        public DateTime LastUpdate { get; private set; }
+        
     }
 }

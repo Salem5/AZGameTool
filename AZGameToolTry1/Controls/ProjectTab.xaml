@@ -48,7 +48,7 @@
 				Grid.Row="1"
 				HorizontalAlignment="Center"
 				VerticalAlignment="Center">
-										<TextBlock >README.md</TextBlock>
+										<TextBlock Text="{Binding FileName}" />
 										<Button
 					Margin="0,4,0,0"
 					Command="{Binding DataContext.ViewReadmeCommand, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}"

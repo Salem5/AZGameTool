@@ -21,20 +21,19 @@
      TextOptions.TextRenderingMode="Auto"
      Background="{DynamicResource MaterialDesignPaper}"
      FontFamily="{DynamicResource MaterialDesignFont}"        		
-					  Icon="/Content/GoboToolIcon.ico"					 
+					  Icon="/Content/oozesmile.ico"					 
 	DataContext="{Binding MainViewModel, Source={StaticResource ServiceLocator}}"
     Loaded="MetroWindow_Loaded" Unloaded="MetroWindow_Unloaded"
 	>
-	<!--<mahApps:MetroWindow.RightWindowCommands>
+	<mahApps:MetroWindow.RightWindowCommands>
 		<mahApps:WindowCommands HorizontalAlignment="Stretch">
 			<Menu IsMainMenu="False" Margin="4 0 4 0" Padding="0"  Grid.Column="1" HorizontalAlignment="Right">
-				<MenuItem Header="Omar" VerticalAlignment="Center" Background="Transparent">
-					<MenuItem Header="Profile"  />
-					<MenuItem Header="Logout" />
+				<MenuItem Header="..." VerticalAlignment="Center" Background="Transparent">
+					<MenuItem Header="The Developer" Command="{Binding OpenAboutMeCommand}" />
 				</MenuItem>
 			</Menu>
 		</mahApps:WindowCommands>
-	</mahApps:MetroWindow.RightWindowCommands>-->
+	</mahApps:MetroWindow.RightWindowCommands>
 	<Grid>
 		<Grid.RowDefinitions>
 			<RowDefinition Height="*"/>
@@ -49,7 +48,7 @@
 					<mahApps:Badged>
 						<StackPanel Orientation="Horizontal">
 							<materialDesign:PackIcon Kind="Folder" Visibility="{Binding LoadedProject, Converter={ownConverters:StringNullEmptyToVisibilityConverter}}"  Foreground="{DynamicResource PrimaryHueMidForegroundBrush}"/>
-							<TextBlock Text="{Binding LoadedProject}" HorizontalAlignment="Stretch" MaxWidth="100" TextTrimming="CharacterEllipsis" Foreground="{DynamicResource PrimaryHueMidForegroundBrush}"/>z							
+							<TextBlock Text="{Binding LoadedProject}" HorizontalAlignment="Stretch" MaxWidth="100" TextTrimming="CharacterEllipsis" Foreground="{DynamicResource PrimaryHueMidForegroundBrush}"/>
 						</StackPanel>
 					</mahApps:Badged>
 				</TabItem.Header>
