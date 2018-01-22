@@ -25,7 +25,7 @@
 	DataContext="{Binding MainViewModel, Source={StaticResource ServiceLocator}}"
     Loaded="MetroWindow_Loaded" Unloaded="MetroWindow_Unloaded"
 	>
-	<mahApps:MetroWindow.RightWindowCommands>
+	<!--<mahApps:MetroWindow.RightWindowCommands>
 		<mahApps:WindowCommands HorizontalAlignment="Stretch">
 			<Menu IsMainMenu="False" Margin="4 0 4 0" Padding="0"  Grid.Column="1" HorizontalAlignment="Right">
 				<MenuItem Header="Omar" VerticalAlignment="Center" Background="Transparent">
@@ -34,22 +34,22 @@
 				</MenuItem>
 			</Menu>
 		</mahApps:WindowCommands>
-	</mahApps:MetroWindow.RightWindowCommands>
+	</mahApps:MetroWindow.RightWindowCommands>-->
 	<Grid>
 		<Grid.RowDefinitions>
 			<RowDefinition Height="*"/>
 			<RowDefinition Height="Auto"/>
 		</Grid.RowDefinitions>
-		<dragablz:TabablzControl x:Name="TabHostControl" >
+		<dragablz:TabablzControl x:Name="TabHostControl" ShowDefaultCloseButton="False">
 			<dragablz:TabablzControl.InterTabController>
-				<dragablz:InterTabController />
+				<dragablz:InterTabController  />
 			</dragablz:TabablzControl.InterTabController>
-			<TabItem IsSelected="{Binding PickerTabControl, Mode=TwoWay}" >
+			<TabItem IsSelected="{Binding PickerTabControl, Mode=TwoWay}"  >
 				<TabItem.Header>
 					<mahApps:Badged>
 						<StackPanel Orientation="Horizontal">
 							<materialDesign:PackIcon Kind="Folder" Visibility="{Binding LoadedProject, Converter={ownConverters:StringNullEmptyToVisibilityConverter}}"  Foreground="{DynamicResource PrimaryHueMidForegroundBrush}"/>
-							<TextBlock Text="{Binding LoadedProject}" HorizontalAlignment="Stretch" MaxWidth="100" TextTrimming="CharacterEllipsis" Foreground="{DynamicResource PrimaryHueMidForegroundBrush}"/>
+							<TextBlock Text="{Binding LoadedProject}" HorizontalAlignment="Stretch" MaxWidth="100" TextTrimming="CharacterEllipsis" Foreground="{DynamicResource PrimaryHueMidForegroundBrush}"/>z							
 						</StackPanel>
 					</mahApps:Badged>
 				</TabItem.Header>
@@ -84,11 +84,5 @@
 											Foreground="{DynamicResource PrimaryHueMidForegroundBrush}"											
 											/>
 		</materialDesign:Snackbar>
-		<!--<materialDesign:SnackbarMessage ActionContent="Details" 
-											Content="{Binding DataContext.MessageQueue.Title, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type materialDesign:Snackbar}}}" 
-											Foreground="{DynamicResource PrimaryHueMidForegroundBrush}"
-											Background="{Binding DataContext.MessageQueue.Kind, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type materialDesign:Snackbar}}, Converter={ownConverters:NotificationTypeToBrushConverter}, ConverterParameter=AccentColorBrush4;AccentColorBrush3;AccentColorBrush2;AccentColorBrush, Mode=OneWay}" />
-		</materialDesign:Snackbar>-->
-
 	</Grid>
 </mahApps:MetroWindow>
