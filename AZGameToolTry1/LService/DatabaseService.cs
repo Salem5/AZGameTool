@@ -1,6 +1,7 @@
 ﻿using AZGameToolTry1.Model;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -29,5 +30,12 @@ namespace AZGameToolTry1.LService
             ChangeDatabase(changedCollectionName);
             return res;
         }
+
+        public double DbSize()
+        {
+            return new FileInfo(App.DbPath).Length;
+        }
+
+      
     }
 }

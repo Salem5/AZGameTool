@@ -34,6 +34,24 @@ namespace AZGameToolTry1.ViewModel
             private set => SetValue<ISnackbarMessageQueue>(value, ref messageQueue);
         }
 
+        public bool DebugVisible
+        {
+            get
+            {
+                //#if DEBUG
+                //                return true;
+                //#else
+                //                return false;
+                //#endif
+                return App.DebugVisible;
+            }
+            set
+            {
+                App.DebugVisible = value;
+                RaisePropertyChanged(nameof(DebugVisible));
+            }
+
+        }
 
         public int? badgeCount;
         public int? BadgeCount

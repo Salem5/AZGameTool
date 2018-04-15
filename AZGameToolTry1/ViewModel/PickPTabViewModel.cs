@@ -59,7 +59,7 @@ namespace AZGameToolTry1.ViewModel
                 }
                 else
                 {
-                    statusNotificationService.SendMessage(new Notification() { Kind = NotificationKind.Error, Message = "This Application requires Windows Vista(I think) or up, because I simply refuse to also spawn the classic folder picker. Sorry.", Title = "For the love of ***: UPDATE!", Time = DateTime.Now });
+                    statusNotificationService.SendMessage(new Notification() { Kind = NotificationKind.Error, Message = "This Application requires Windows Vista(I think) or up, because I simply refuse to also spawn the classic folder picker. Sorry.", Title = "For the love of everything holy: UPDATE!", Time = DateTime.Now });
                 }
             });
 

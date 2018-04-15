@@ -17,6 +17,7 @@ namespace AZGameToolTry1
     public partial class App : Application
     {
         public static string DbPath { get; } = @"MyData.db";
+        public static bool DebugVisible { get; internal set; }
 
         protected override void OnStartup(StartupEventArgs e)
         {

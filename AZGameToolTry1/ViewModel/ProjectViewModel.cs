@@ -69,9 +69,7 @@ namespace AZGameToolTry1.ViewModel
             get { return projectFiles; }
             set { SetValue<ObservableCollection<BaseMd>>(value, ref projectFiles); }
         }
-
         
-
         protected override void Dispose(bool disposing)
         {
             projectDataService.ProjectLoaded -= ProjectDataService_ProjectLoaded;

@@ -23,8 +23,30 @@ namespace AZGameToolTry1.ViewModel
         readonly IStatusNotificationService statusNotificationService;
         readonly IDatabaseService databaseService;
 
+      
         public ICommand ResetDatabaseCommand { get; }
         public ICommand TestNotificationCommand { get; }
+      
+        public double DbSize { get => databaseService.DbSize(); }
+
+        public bool DebugVisible
+        {
+            get
+            {
+                //#if DEBUG
+                //                return true;
+                //#else
+                //                return false;
+                //#endif
+                return App.DebugVisible;
+            }
+            set
+            {
+                App.DebugVisible = value;
+                RaisePropertyChanged(nameof(DebugVisible));
+            }
+
+        }
 
         public SettingsViewModel(IStatusNotificationService statusNotificationServiceParam, IDatabaseService databaseServiceParam)
         {
@@ -39,7 +61,6 @@ namespace AZGameToolTry1.ViewModel
                     {
                         db.DropCollection(nameof(RecentProject));
                     }
-
                     return null;
                 }, nameof(RecentProject));
             });

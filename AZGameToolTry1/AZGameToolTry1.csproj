@@ -171,6 +171,7 @@
     <Compile Include="Controls\SettingsTab.xaml.cs">
       <DependentUpon>SettingsTab.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converter\BooleanToVisibilityConverter.cs" />
     <Compile Include="Converter\NotificationTypeToPackIconConverter.cs" />
     <Compile Include="Converter\NotificationTypeToBrushConverter.cs" />
     <Compile Include="Converter\StringNullEmptyToVisibilityConverter.cs" />

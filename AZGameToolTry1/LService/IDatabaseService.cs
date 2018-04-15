@@ -11,5 +11,6 @@ namespace AZGameToolTry1.LService
     {
         event DatabaseChangeHandler DatabaseChange;
         RecentProject WriteInDb(DbActions dbactions, string changedCollection);
+        double DbSize();
     }
 }

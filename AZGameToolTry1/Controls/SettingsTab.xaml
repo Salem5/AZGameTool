@@ -4,18 +4,19 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:AZGameToolTry1.Controls"
-			 	  xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-					  xmlns:dragablz="clr-namespace:Dragablz;assembly=Dragablz"
-					  xmlns:mahApps="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-					  xmlns:controls="clr-namespace:AZGameToolTry1.Controls"
-					  xmlns:wpfexample="clr-namespace:MaterialDesignColors.WpfExample"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+			 xmlns:dragablz="clr-namespace:Dragablz;assembly=Dragablz"
+			 xmlns:mahApps="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+			 xmlns:controls="clr-namespace:AZGameToolTry1.Controls"
+			 xmlns:wpfexample="clr-namespace:MaterialDesignColors.WpfExample"
+             xmlns:ownConverters="clr-namespace:AZGameToolTry1.Converter"
 			 mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300"
 			 DataContext="{Binding SettingsViewModel, Mode=OneWay, Source={StaticResource ServiceLocator}}">
 
-	<ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Margin="0 12 0 0">
-		<StackPanel>
-			<!--<GroupBox
+    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Margin="0 12 0 0">
+        <StackPanel>
+            <!--<GroupBox
 	Margin="16"
 	Header="Paths"
 	Style="{DynamicResource MaterialDesignCardGroupBox}">
@@ -43,81 +44,88 @@
 	Style="{StaticResource MaterialDesignFloatingHintTextBox}" Text="Some Text" >
 						<materialDesign:HintAssist.Hint >
 							<StackPanel Orientation="Horizontal">
-								--><!--<materialDesign:PackIcon Kind="Console" />--><!--
+								-->
+            <!--<materialDesign:PackIcon Kind="Console" />-->
+            <!--
 								<TextBlock>Project Root</TextBlock>
 							</StackPanel>
 						</materialDesign:HintAssist.Hint>
 					</TextBox>
 				</StackPanel>
 			</GroupBox>-->
-			<GroupBox
+            <GroupBox
 	Margin="16"
 	Header="Palette"
 	Style="{DynamicResource MaterialDesignCardGroupBox}">
-				<GroupBox.HeaderTemplate>
-					<DataTemplate>
-						<StackPanel Orientation="Horizontal">
-							<materialDesign:PackIcon
+                <GroupBox.HeaderTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon
 					Width="32"
 					Height="32"
 					VerticalAlignment="Center"
 					Kind="Palette" />
-							<TextBlock
+                            <TextBlock
 					Margin="8,0,0,0 "
 					VerticalAlignment="Center"
 					Style="{StaticResource MaterialDesignSubheadingTextBlock}"
 					Text="{Binding}" />
-						</StackPanel>
-					</DataTemplate>
-				</GroupBox.HeaderTemplate>
-				<wpfexample:PaletteSelector/>
-			</GroupBox>
-			<GroupBox
+                        </StackPanel>
+                    </DataTemplate>
+                </GroupBox.HeaderTemplate>
+                <wpfexample:PaletteSelector/>
+            </GroupBox>
+            <GroupBox
 	Margin="16"
 	Header="Data"
 	Style="{DynamicResource MaterialDesignCardGroupBox}">
-				<GroupBox.HeaderTemplate>
-					<DataTemplate>
-						<StackPanel Orientation="Horizontal">
-							<materialDesign:PackIcon
+                <GroupBox.HeaderTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon
 					Width="32"
 					Height="32"
 					VerticalAlignment="Center"
 					Kind="Database" />
-							<TextBlock
+                            <TextBlock
 					Margin="8,0,0,0 "
 					VerticalAlignment="Center"
 					Style="{StaticResource MaterialDesignSubheadingTextBlock}"
 					Text="{Binding}" />
-						</StackPanel>
-					</DataTemplate>
-				</GroupBox.HeaderTemplate>
-				<StackPanel>
-					<Grid>
-						<Grid.ColumnDefinitions>
-							<ColumnDefinition/>
-							<ColumnDefinition/>
-							<ColumnDefinition/>
-							<ColumnDefinition/>
-						</Grid.ColumnDefinitions>
-						<Button Style="{StaticResource MaterialDesignRaisedAccentButton}" Command="{Binding TestNotificationCommand}" CommandParameter="0" Grid.Column="0" Margin="5">
-							DEBUG: Send Info
-						</Button>
-						<Button Style="{StaticResource MaterialDesignRaisedAccentButton}" Command="{Binding TestNotificationCommand}" CommandParameter="1" Grid.Column="1" Margin="5">
-							DEBUG: Send Warning
-						</Button>
-						<Button Style="{StaticResource MaterialDesignRaisedAccentButton}" Command="{Binding TestNotificationCommand}" CommandParameter="2" Grid.Column="2" Margin="5">
-							DEBUG: Send Error
-						</Button>
-						<Button Style="{StaticResource MaterialDesignRaisedAccentButton}" Command="{Binding TestNotificationCommand}" CommandParameter="3" Grid.Column="3" Margin="5">
-							DEBUG: Send Other
-						</Button>
-					</Grid>
-					<Button Style="{StaticResource MaterialDesignRaisedAccentButton}" Command="{Binding ResetDatabaseCommand}">
-						DEBUG: Clear Database?
-					</Button>
-				</StackPanel>
-			</GroupBox>
-		</StackPanel>
-	</ScrollViewer>
+                        </StackPanel>
+                    </DataTemplate>
+                </GroupBox.HeaderTemplate>
+                <StackPanel>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Button Style="{StaticResource MaterialDesignRaisedAccentButton}" Command="{Binding TestNotificationCommand}" CommandParameter="0" Grid.Column="0" Margin="5" Visibility="{Binding DebugVisible, Mode=TwoWay , Converter={ownConverters:BooleanToVisibilityConverter}}">
+                            DEBUG: Send Info
+                        </Button>
+                        <Button Style="{StaticResource MaterialDesignRaisedAccentButton}" Command="{Binding TestNotificationCommand}" CommandParameter="1" Grid.Column="1" Margin="5" Visibility="{Binding DebugVisible , Mode=TwoWay, Converter={ownConverters:BooleanToVisibilityConverter}}">
+                            DEBUG: Send Warning
+                        </Button>
+                        <Button Style="{StaticResource MaterialDesignRaisedAccentButton}" Command="{Binding TestNotificationCommand}" CommandParameter="2" Grid.Column="2" Margin="5" Visibility="{Binding DebugVisible, Mode=TwoWay, Converter={ownConverters:BooleanToVisibilityConverter}}">
+                            DEBUG: Send Error
+                        </Button>
+                        <Button Style="{StaticResource MaterialDesignRaisedAccentButton}" Command="{Binding TestNotificationCommand}" CommandParameter="3" Grid.Column="3" Margin="5" Visibility="{Binding DebugVisible, Mode=TwoWay , Converter={ownConverters:BooleanToVisibilityConverter}}">
+                            DEBUG: Send Other
+                        </Button>
+                    </Grid>
+                    <Button Style="{StaticResource MaterialDesignRaisedAccentButton}" Command="{Binding ResetDatabaseCommand}" Visibility="{Binding DebugVisible , Converter={ownConverters:BooleanToVisibilityConverter}}">
+                        DEBUG: Clear Database?
+                    </Button>
+                    <TextBlock>
+                        <Run Text="Database Size: " />
+                        <Run Text="{ Binding DbSize, Mode=OneTime,FallbackValue=Unknown}"/>
+                        <Run Text=" Bytes" />
+                    </TextBlock>
+                </StackPanel>
+            </GroupBox>
+        </StackPanel>
+    </ScrollViewer>
 </UserControl>

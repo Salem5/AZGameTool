@@ -11,15 +11,20 @@ using System.Windows.Markup;
 
 namespace AZGameToolTry1.Converter
 {
-    public class NotificationTypeToBrushConverter : MarkupExtension,
+    public class BooleanToVisibilityConverter : MarkupExtension,
         IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            NotificationKind? valueEnum = value as NotificationKind?;
-            string[] brushParameters = ((String)parameter).Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
-
-            return Application.Current.FindResource(brushParameters[Math.Min(((int?)valueEnum ?? 0), brushParameters.Length - 1)]);
+            if (value.GetType() == typeof(Boolean))
+            {
+                var check = (bool)value;
+                if (check)
+                {
+                    return Visibility.Visible;
+                }
+            }
+            return Visibility.Collapsed;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
@@ -27,11 +32,11 @@ namespace AZGameToolTry1.Converter
             throw new NotImplementedException();
         }
 
-        private static NotificationTypeToBrushConverter _converter = null;
+        private static BooleanToVisibilityConverter _converter = null;
 
         public override object ProvideValue(IServiceProvider serviceProvider)
         {
-            return _converter = _converter ?? new NotificationTypeToBrushConverter();
+            return _converter = _converter ?? new BooleanToVisibilityConverter();
         }
     }
 }
